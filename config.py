@@ -11,7 +11,7 @@ class Config:
     BOT_SESSION = environ.get("BOT_SESSION", "vjbot") 
     DATABASE_URI = environ.get("DATABASE_URI", "mongodb+srv://bepofa1629_db_user:407504@cluster0.7ykzha1.mongodb.net/?appName=Cluster0")
     DATABASE_NAME = environ.get("DATABASE_NAME", "vj-forward-bot")
-    BOT_OWNER = int(environ.get("BOT_OWNER", "7470269647"))
+    BOT_OWNER = int(environ.get("BOT_OWNER", "8187759511"))
 
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
