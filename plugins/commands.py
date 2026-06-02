@@ -9,7 +9,8 @@ from database import Db, db
 from config import Config, temp
 from script import Script
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaDocument
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.errors import UserNotParticipant
 import psutil
 import time as time
 from os import environ, execle, system
