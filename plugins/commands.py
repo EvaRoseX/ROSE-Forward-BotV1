@@ -44,14 +44,17 @@ async def start(client, message):
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
     
-    # ⬇️ YAHAN SE LEKAR (IS LINE KE THIK NICHE) ⬇️
+    # 📢 MULTI-FORCE SUBSCRIBE CHECK START
     invite_link = await check_force_subscribe(client, message)
     if invite_link:
         fsub_buttons = [
             [InlineKeyboardButton("📢 Join Channel", url=invite_link)],
             [InlineKeyboardButton("🔄 Try Again", url=f"https://t.me/{(await client.get_me()).username}?start=start")]
         ]
+        
+        # Yahan fsub poster ka graph.org link daal dena
         FSUB_IMG = "https://graph.org/file/your-image-url.jpg" 
+        
         await client.send_photo(
             chat_id=message.chat.id,
             photo=FSUB_IMG,
@@ -59,10 +62,12 @@ async def start(client, message):
             caption=f"👋 Hello {user.first_name},\n\nOur bot is premium! To use this bot, you must join our update channels first. Click the button below to join!"
         )
         return  
-    # ⬆️ YAHAN TAK KA CODE AAPKO BEECH ME ADD KARNA HAI ⬆️
+    # 📢 MULTI-FORCE SUBSCRIBE CHECK END
 
-    # Iske niche aapka normal baki ka code chalega:
+    # Agar saare channels joined hain, toh ye normal start menu chalega:
     reply_markup = InlineKeyboardMarkup(main_buttons)
+    
+    # Isko aapne jo pehle girl photo set ki thi, wahi link yahan rehne dena
     START_IMG = "https://graph.org/file/your-image-url.jpg"
     
     await client.send_photo(
