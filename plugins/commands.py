@@ -112,8 +112,10 @@ async def start(client, message):
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
 # Ask Doubt on telegram @KingVJ01
 
-@Client.on_message(filters.private & filters.command(['restart']) & filters.user(Config.BOT_OWNER))
+@@Client.on_message(filters.private & filters.command(['restart']) & filters.user(Config.BOT_OWNER))
 async def restart(client, message):
     msg = await message.reply_text(text="<i>Trying to restarting.....</i>")
     await asyncio.sleep(5)
-    await msg.edit("<i>Server restarted
+    await msg.edit("<i>Server restarted successfully ✅</i>")
+    system("git pull -f && pip3 install --no-cache-dir -r requirements.txt")
+    execle(sys.executable, sys.executable, "main.py", environ)
