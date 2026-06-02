@@ -43,7 +43,18 @@ async def start(client, message):
     user = message.from_user
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
+        
     reply_markup = InlineKeyboardMarkup(main_buttons)
+    
+    # Yahan apni photo ka telegraph link ya telegram file id daalein
+    START_IMG = "https://i.ibb.co/gYFD469/photo-2026-05-28-08-13-57-7644852993002569744.jpg"
+    
+    await client.send_photo(
+        chat_id=message.chat.id,
+        photo=START_IMG,
+        reply_markup=reply_markup,
+        caption=Script.START_TXT.format(message.from_user.first_name)
+    )
     await client.send_message(
         chat_id=message.chat.id,
         reply_markup=reply_markup,
