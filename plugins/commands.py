@@ -55,10 +55,7 @@ async def start(client, message):
         reply_markup=reply_markup,
         caption=Script.START_TXT.format(message.from_user.first_name)
     )
-    await client.send_message(
-        chat_id=message.chat.id,
-        reply_markup=reply_markup,
-        text=Script.START_TXT.format(message.from_user.first_name))
+    
 
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
