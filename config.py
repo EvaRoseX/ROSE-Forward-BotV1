@@ -12,6 +12,9 @@ class Config:
     DATABASE_URI = environ.get("DATABASE_URI", "mongodb+srv://gxmon239:f4l7bKrhka3Fh2cV@cluster0.qmblwql.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     DATABASE_NAME = environ.get("DATABASE_NAME", "vj-forward-bot")
     BOT_OWNER = int(environ.get("BOT_OWNER", "8391386178"))
+    # Multi-Force Subscribe Channels List
+# Note: Channel ID hamesha -100 se start hoti hai
+    FORCE_SUB_CHANNELS = [-1001234567890, -1000987654321]
 
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
