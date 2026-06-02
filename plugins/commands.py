@@ -43,11 +43,27 @@ async def start(client, message):
     user = message.from_user
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
-        
-    reply_markup = InlineKeyboardMarkup(main_buttons)
     
-    # Yahan apni photo ka telegraph link ya telegram file id daalein
-    START_IMG = "https://i.ibb.co/gYFD469/photo-2026-05-28-08-13-57-7644852993002569744.jpg"
+    # ⬇️ YAHAN SE LEKAR (IS LINE KE THIK NICHE) ⬇️
+    invite_link = await check_force_subscribe(client, message)
+    if invite_link:
+        fsub_buttons = [
+            [InlineKeyboardButton("📢 Join Channel", url=invite_link)],
+            [InlineKeyboardButton("🔄 Try Again", url=f"https://t.me/{(await client.get_me()).username}?start=start")]
+        ]
+        FSUB_IMG = "https://graph.org/file/your-image-url.jpg" 
+        await client.send_photo(
+            chat_id=message.chat.id,
+            photo=FSUB_IMG,
+            reply_markup=InlineKeyboardMarkup(fsub_buttons),
+            caption=f"👋 Hello {user.first_name},\n\nOur bot is premium! To use this bot, you must join our update channels first. Click the button below to join!"
+        )
+        return  
+    # ⬆️ YAHAN TAK KA CODE AAPKO BEECH ME ADD KARNA HAI ⬆️
+
+    # Iske niche aapka normal baki ka code chalega:
+    reply_markup = InlineKeyboardMarkup(main_buttons)
+    START_IMG = "https://graph.org/file/your-image-url.jpg"
     
     await client.send_photo(
         chat_id=message.chat.id,
