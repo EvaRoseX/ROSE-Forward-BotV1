@@ -34,6 +34,29 @@ main_buttons = [[
     InlineKeyboardButton('⚙ sᴇᴛᴛɪɴɢs', callback_data='settings#main')
 ]]
 
+# 📢 MULTI-FORCE SUBSCRIBE CHECK FUNCTION
+async def check_force_subscribe(client, message):
+    channels = getattr(Config, "FORCE_SUB_CHANNELS", None)
+    if not channels:
+        return True
+
+    for channel_id in channels:
+        try:
+            await client.get_chat_member(chat_id=channel_id, user_id=message.from_user.id)
+        except UserNotParticipant:
+            try:
+                chat = await client.get_chat(channel_id)
+                invite_link = chat.invite_link or (await client.create_chat_invite_link(channel_id)).invite_link
+                return invite_link
+            except Exception as e:
+                print(f"Error generating link for {channel_id}: {e}")
+                return None
+        except Exception as e:
+            print(f"Error checking member for {channel_id}: {e}")
+            continue
+            
+    return True
+
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
 # Ask Doubt on telegram @KingVJ01
