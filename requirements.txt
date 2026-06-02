@@ -2,7 +2,7 @@ pyrofork
 tgcrypto
 pyropatch
 humanize 
-motor==2.5.1
+motor==3.6.0
 TgCrypto
 Dnspython
 pymongo[srv]==3.12.3 
