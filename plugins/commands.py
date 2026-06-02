@@ -77,7 +77,7 @@ async def start(client, message):
         ]
         
         # Yahan fsub poster ka graph.org link daal dena
-        FSUB_IMG = "https://graph.org/file/your-image-url.jpg" 
+        FSUB_IMG = "https://i.ibb.co/HLhnypGg/photo-2026-05-27-17-49-35-7644630238818730000.jpg" 
         
         await client.send_photo(
             chat_id=message.chat.id,
