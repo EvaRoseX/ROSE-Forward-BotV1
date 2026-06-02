@@ -14,7 +14,7 @@ class Config:
     BOT_OWNER = int(environ.get("BOT_OWNER", "8391386178"))
     # Multi-Force Subscribe Channels List
 # Note: Channel ID hamesha -100 se start hoti hai
-    FORCE_SUB_CHANNELS = [-1001234567890, -1000987654321]
+    FORCE_SUB_CHANNELS = [-1003985895823]
 
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
