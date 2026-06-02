@@ -35,11 +35,11 @@ main_buttons = [[
     InlineKeyboardButton('⚙ sᴇᴛᴛɪɴɢs', callback_data='settings#main')
 ]]
 
-# 📢 MULTI-FORCE SUBSCRIBE CHECK FUNCTION
+# 📢 MULTI-FORCE SUBSCRIBE CHECK FUNCTION (FIXED)
 async def check_force_subscribe(client, message):
     channels = getattr(Config, "FORCE_SUB_CHANNELS", None)
     if not channels:
-        return True
+        return None
 
     for channel_id in channels:
         try:
@@ -56,7 +56,7 @@ async def check_force_subscribe(client, message):
             print(f"Error checking member for {channel_id}: {e}")
             continue
             
-    return True
+    return None
 
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
@@ -72,35 +72,41 @@ async def start(client, message):
     invite_link = await check_force_subscribe(client, message)
     if invite_link:
         fsub_buttons = [
-            [InlineKeyboardButton("📢 Join Channel", url=invite_link)], # <-- Ye comma lagayein
+            [InlineKeyboardButton("📢 Join Channel", url=str(invite_link))],
             [InlineKeyboardButton("🔄 Try Again", url=f"https://t.me/{(await client.get_me()).username}?start=start")]
         ]
         
-        # Yahan fsub poster ka graph.org link daal dena
+        # Aapka fsub poster imgbb wala link
         FSUB_IMG = "https://i.ibb.co/HLhnypGg/photo-2026-05-27-17-49-35-7644630238818730000.jpg" 
         
-        await client.send_photo(
-            chat_id=message.chat.id,
-            photo=FSUB_IMG,
-            reply_markup=InlineKeyboardMarkup(fsub_buttons),
-            caption=f"👋 Hello {user.first_name},\n\nOur bot is premium! To use this bot, you must join our update channels first. Click the button below to join!"
-        )
-        return  
+        try:
+            await client.send_photo(
+                chat_id=message.chat.id,
+                photo=FSUB_IMG,
+                reply_markup=InlineKeyboardMarkup(fsub_buttons),
+                caption=f"👋 Hello {user.first_name},\n\nOur bot is premium! To use this bot, you must join our update channels first. Click the button below to join!"
+            )
+            return  
+        except Exception as e:
+            print(f"Error sending Fsub photo: {e}")
+            return
     # 📢 MULTI-FORCE SUBSCRIBE CHECK END
 
     # Agar saare channels joined hain, toh ye normal start menu chalega:
     reply_markup = InlineKeyboardMarkup(main_buttons)
     
-    # Isko aapne jo pehle girl photo set ki thi, wahi link yahan rehne dena
-    START_IMG = "https://graph.org/file/your-image-url.jpg"
+    # Yahan apni main photo (girl photo) ka asli link daal dena
+    START_IMG = "https://i.ibb.co/Psbzdt8L/photo-2026-03-20-17-00-37-7619383841232257040.jpg"
     
-    await client.send_photo(
-        chat_id=message.chat.id,
-        photo=START_IMG,
-        reply_markup=reply_markup,
-        caption=Script.START_TXT.format(message.from_user.first_name)
-    )
-    
+    try:
+        await client.send_photo(
+            chat_id=message.chat.id,
+            photo=START_IMG,
+            reply_markup=reply_markup,
+            caption=Script.START_TXT.format(message.from_user.first_name)
+        )
+    except Exception as e:
+        print(f"Error sending Start photo: {e}")
 
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
@@ -110,139 +116,4 @@ async def start(client, message):
 async def restart(client, message):
     msg = await message.reply_text(text="<i>Trying to restarting.....</i>")
     await asyncio.sleep(5)
-    await msg.edit("<i>Server restarted successfully ✅</i>")
-    system("git pull -f && pip3 install --no-cache-dir -r requirements.txt")
-    execle(sys.executable, sys.executable, "main.py", environ)
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-@Client.on_callback_query(filters.regex(r'^help'))
-async def helpcb(bot, query):
-    buttons = [[
-        InlineKeyboardButton('🤔 ʜᴏᴡ ᴛᴏ ᴜsᴇ ᴍᴇ ❓', callback_data='how_to_use')
-    ],[
-        InlineKeyboardButton('Aʙᴏᴜᴛ ✨️', callback_data='about'),
-        InlineKeyboardButton('⚙ Sᴇᴛᴛɪɴɢs', callback_data='settings#main')
-    ],[
-        InlineKeyboardButton('• back', callback_data='back')
-    ]]
-    reply_markup = InlineKeyboardMarkup(buttons)
-    await query.message.edit_text(text=Script.HELP_TXT, reply_markup=reply_markup)
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-@Client.on_callback_query(filters.regex(r'^how_to_use'))
-async def how_to_use(bot, query):
-    buttons = [[InlineKeyboardButton('• back', callback_data='help')]]
-    reply_markup = InlineKeyboardMarkup(buttons)
-    await query.message.edit_text(
-        text=Script.HOW_USE_TXT,
-        reply_markup=reply_markup,
-        disable_web_page_preview=True
-    )
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-@Client.on_callback_query(filters.regex(r'^back'))
-async def back(bot, query):
-    reply_markup = InlineKeyboardMarkup(main_buttons)
-    await query.message.edit_text(
-       reply_markup=reply_markup,
-       text=Script.START_TXT.format(query.from_user.first_name))
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-@Client.on_callback_query(filters.regex(r'^about'))
-async def about(bot, query):
-    buttons = [[
-         InlineKeyboardButton('• back', callback_data='help'),
-         InlineKeyboardButton('Stats ✨️', callback_data='status')
-    ]]
-    reply_markup = InlineKeyboardMarkup(buttons)
-    await query.message.edit_text(
-        text=Script.ABOUT_TXT,
-        reply_markup=reply_markup,
-        disable_web_page_preview=True
-    )
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-@Client.on_callback_query(filters.regex(r'^status'))
-async def status(bot, query):
-    users_count, bots_count = await db.total_users_bots_count()
-    forwardings = await db.forwad_count()
-    upt = await get_bot_uptime(START_TIME)
-    buttons = [[
-        InlineKeyboardButton('• back', callback_data='help'),
-        InlineKeyboardButton('System Stats ✨️', callback_data='systm_sts'),
-    ]]
-    reply_markup = InlineKeyboardMarkup(buttons)
-    await query.message.edit_text(
-        text=Script.STATUS_TXT.format(upt, users_count, bots_count, forwardings),
-        reply_markup=reply_markup,
-        disable_web_page_preview=True,
-    )
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-@Client.on_callback_query(filters.regex(r'^systm_sts'))
-async def sys_status(bot, query):
-    buttons = [[InlineKeyboardButton('• back', callback_data='help')]]
-    ram = psutil.virtual_memory().percent
-    cpu = psutil.cpu_percent()
-    disk_usage = psutil.disk_usage('/')
-    total_space = disk_usage.total / (1024**3)  # Convert to GB
-    used_space = disk_usage.used / (1024**3)    # Convert to GB
-    free_space = disk_usage.free / (1024**3)
-    text = f"""
-╔════❰ sᴇʀᴠᴇʀ sᴛᴀᴛs  ❱═❍⊱❁۪۪
-║╭━━━━━━━━━━━━━━━➣
-║┣⪼ <b>ᴛᴏᴛᴀʟ ᴅɪsᴋ sᴘᴀᴄᴇ</b>: <code>{total_space:.2f} GB</code>
-║┣⪼ <b>ᴜsᴇᴅ</b>: <code>{used_space:.2f} GB</code>
-║┣⪼ <b>ꜰʀᴇᴇ</b>: <code>{free_space:.2f} GB</code>
-║┣⪼ <b>ᴄᴘᴜ</b>: <code>{cpu}%</code>
-║┣⪼ <b>ʀᴀᴍ</b>: <code>{ram}%</code>
-║╰━━━━━━━━━━━━━━━➣
-╚══════════════════❍⊱❁۪۪
-"""
-    reply_markup = InlineKeyboardMarkup(buttons)
-    await query.message.edit_text(
-        text,
-        reply_markup=reply_markup,
-        disable_web_page_preview=True,
-    )
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-async def get_bot_uptime(start_time):
-    # Calculate the uptime in seconds
-    uptime_seconds = int(time.time() - start_time)
-    uptime_minutes = uptime_seconds // 60
-    uptime_hours = uptime_minutes // 60
-    uptime_days = uptime_hours // 24
-    uptime_weeks = uptime_days // 7
-    uptime_string = ""
-    if uptime_hours != 0:
-        uptime_string += f" {uptime_hours % 24}H"
-    if uptime_minutes != 0:
-        uptime_string += f" {uptime_minutes % 60}M"
-    uptime_string += f" {uptime_seconds % 60} Sec"
-    return uptime_string   
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
+    await msg.edit("<i>Server restarted
