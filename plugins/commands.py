@@ -48,7 +48,7 @@ async def start(client, message):
     invite_link = await check_force_subscribe(client, message)
     if invite_link:
         fsub_buttons = [
-            [InlineKeyboardButton("📢 Join Channel", url=invite_link)],
+            [InlineKeyboardButton("📢 Join Channel", url=invite_link)], # <-- Ye comma lagayein
             [InlineKeyboardButton("🔄 Try Again", url=f"https://t.me/{(await client.get_me()).username}?start=start")]
         ]
         
